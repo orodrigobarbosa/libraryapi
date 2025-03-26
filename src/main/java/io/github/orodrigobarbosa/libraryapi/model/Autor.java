@@ -2,17 +2,14 @@ package io.github.orodrigobarbosa.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
-import lombok.Getter;
-import lombok.Setter;
+
 
 import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
-
+@Data
 @Entity
 @Table(name = "autor", schema = "public")
-@Getter
-@Setter
 public class Autor {
 
     @Id
