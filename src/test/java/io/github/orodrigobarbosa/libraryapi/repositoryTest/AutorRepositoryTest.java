@@ -69,7 +69,7 @@ public class AutorRepositoryTest {
     }
 
     @Test
-    void salvarAutorComLivrosTeste(){ //testanto o relacionamento OneToMany - Um autor para varios livros
+    void salvarAutorComLivrosTeste() { //testanto o relacionamento OneToMany - Um autor para varios livros
         Autor autor = new Autor();
         autor.setNome("Antonio");
         autor.setNacionalidade("Brasileira");
@@ -97,17 +97,16 @@ public class AutorRepositoryTest {
 
         autorRepository.save(autor);
 
-       // livroRepository.saveAll(autor.getLivros()); com o cascade.all  na entidade Autor, o saveAll é desnecessario
+        // livroRepository.saveAll(autor.getLivros()); com o cascade.all  na entidade Autor, o saveAll é desnecessario
     }
 
     @Test
-    void listarLivrosAutor(){
+    void listarLivrosAutor() {
         var id = UUID.fromString("b092a4e1-7f7a-4412-bfa8-6cfa78cf7fa4");
         var autor = autorRepository.findById(id).get();
 
         List<Livro> livrosLista = livroRepository.findByAutor(autor);
         autor.setLivros(livrosLista);
-
 
         autor.getLivros().forEach(System.out::println);
     }
