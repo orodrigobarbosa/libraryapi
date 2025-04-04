@@ -20,9 +20,9 @@ public class AutorRepositoryTest {
     @Test
     public void salvarTest() {
         Autor autor = new Autor();
-        autor.setNome("Ana");
+        autor.setNome("Belchior");
         autor.setNacionalidade("Brasileira");
-        autor.setDataNascimento(LocalDate.of(1990, 1, 28));
+        autor.setDataNascimento(LocalDate.of(1954, 1, 28));
 
         var autorSalvo = autorRepository.save(autor);
         System.out.println("Autor salvo: " + autorSalvo);
@@ -30,7 +30,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void atualizarTest() {
-        var id = UUID.fromString("92f05afb-3a32-4a5f-a352-b74b81fc92e7");
+        var id = UUID.fromString("9f7db8c0-b166-4802-8f1a-8f2f79177b0c");
 
         Optional<Autor> possivelAutor = autorRepository.findById(id);
         if (possivelAutor.isPresent()) {
@@ -38,7 +38,7 @@ public class AutorRepositoryTest {
             System.out.println("Dados do Autor: ");
             System.out.println(autorEncontrado);
 
-            autorEncontrado.setNome("Maria");
+            autorEncontrado.setNome("Dogshow");
             autorRepository.save(autorEncontrado);
         }
     }
@@ -56,7 +56,7 @@ public class AutorRepositoryTest {
 
     @Test
     public void deletarPorIdTest() {
-        var id = UUID.fromString("c30218a5-ba0a-4c28-8330-5e1c61ec3a3c");
+        var id = UUID.fromString("a8ea4e3e-3ce9-42ce-ac25-bab874fff4c4");
         autorRepository.deleteById(id);
     }
 }
