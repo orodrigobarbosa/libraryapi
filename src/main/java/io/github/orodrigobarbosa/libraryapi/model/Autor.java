@@ -2,6 +2,8 @@ package io.github.orodrigobarbosa.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
+import org.hibernate.annotations.Cascade;
 
 
 import java.time.LocalDate;
@@ -10,6 +12,7 @@ import java.util.UUID;
 @Data
 @Entity
 @Table(name = "autor", schema = "public")
+@ToString (exclude = {"livros"})
 public class Autor {
 
     @Id
@@ -26,8 +29,7 @@ public class Autor {
     @Column(name = "nacionalidade", length = 50, nullable = false)
     private String nacionalidade;
 
-   // @OneToMany(mappedBy = "autor")
-    @Transient
+    @OneToMany(mappedBy = "autor", cascade = CascadeType.ALL) //OneToMany por padrão utiliza fetch Lazy
     private List<Livro> livros;
 
 
