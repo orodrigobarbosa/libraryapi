@@ -33,7 +33,7 @@ public class Livro {
     @Column(name = "preco", precision = 18, scale = 2)
     private BigDecimal preco;
 
-    @ManyToOne (fetch = FetchType.LAZY) //(cascade = CascadeType.ALL)     //serve para operacao de persistancia
+    @ManyToOne  //(cascade = CascadeType.ALL)     //serve para operacao de persistancia
     @JoinColumn(name = "id_autor")
     private Autor autor;
 
