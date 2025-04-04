@@ -8,6 +8,7 @@ import io.github.orodrigobarbosa.libraryapi.repository.LivroRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -96,9 +97,18 @@ public class AutorRepositoryTest {
 
         autorRepository.save(autor);
 
-       // livroRepository.saveAll(autor.getLivros()); com o cascade.all o saveAll é desnecessario
+       // livroRepository.saveAll(autor.getLivros()); com o cascade.all  na entidade Autor, o saveAll é desnecessario
+    }
+
+    @Test
+    void listarLivrosAutor(){
+        var id = UUID.fromString("b092a4e1-7f7a-4412-bfa8-6cfa78cf7fa4");
+        var autor = autorRepository.findById(id).get();
+
+        List<Livro> livrosLista = livroRepository.findByAutor(autor);
+        autor.setLivros(livrosLista);
 
 
-
+        autor.getLivros().forEach(System.out::println);
     }
 }
