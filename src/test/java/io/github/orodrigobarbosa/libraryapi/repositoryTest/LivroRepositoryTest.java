@@ -90,7 +90,7 @@ class LivroRepositoryTest {
 
 
     @Test
-    void atualizarAutorDoLivro(){
+    void atualizarAutorDoLivro() {
         UUID id = UUID.fromString("337529dd-481a-4a4f-9f74-8749fc407440"); //id do livre de Maria
         var livroParaAtualizar = livroRepository.findById(id).orElse(null);
 
@@ -103,20 +103,20 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void deletarLivro(){
+    void deletarLivro() {
         UUID id = UUID.fromString("337529dd-481a-4a4f-9f74-8749fc407440");
         livroRepository.deleteById(id);
     }
 
     @Test
-    void deletarCascade(){ //o codigo é o mesmo, porem, é deletado o livro e o autor
+    void deletarCascade() { //o codigo é o mesmo, porem, é deletado o livro e o autor
         UUID id = UUID.fromString("a549acb9-efd2-4ff2-a3a6-31a6166a3207");
         livroRepository.deleteById(id);
     }
 
     @Test
     @Transactional
-    void buscarLivroTeste(){
+    void buscarLivroTeste() {
         UUID id = UUID.fromString("ac4d52a2-fb98-4ea3-bdf1-98957e9c0741");
         Livro livro = livroRepository.findById(id).orElse(null);
         System.out.println("livro: ");
@@ -127,21 +127,21 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void pesquisaPorTitulo(){
+    void pesquisaPorTitulo() {
 
         List<Livro> lista = livroRepository.findByTitulo("A casa vermelha");
-       lista.forEach(System.out::println);
+        lista.forEach(System.out::println);
 
     }
 
     @Test
-    void pesquisaPorIsbn(){
+    void pesquisaPorIsbn() {
         List<Livro> lista = livroRepository.findByIsbn("9990-3330");
         lista.forEach(System.out::println);
     }
 
     @Test
-    void pesquisaPorTituloEPreco(){
+    void pesquisaPorTituloEPreco() {
         var titulo = "A casa vermelha";
         var preco = BigDecimal.valueOf(200);
 
@@ -150,7 +150,16 @@ class LivroRepositoryTest {
     }
 
     @Test
-    void pesquisaPorTituloOuIsbn(){
+    void pesquisaPorTituloEPrecoOrdenarPorTitulo() {
+        var titulo = "A casa vermelha";
+        var preco = BigDecimal.valueOf(200);
+
+        List<Livro> lista = livroRepository.findByTituloAndPrecoOrderByTitulo(titulo, preco);
+        lista.forEach(System.out::println);
+    }
+
+    @Test
+    void pesquisaPorTituloOuIsbn() {
         var titulo = "";
         var isbn = "84563-94581";
 
