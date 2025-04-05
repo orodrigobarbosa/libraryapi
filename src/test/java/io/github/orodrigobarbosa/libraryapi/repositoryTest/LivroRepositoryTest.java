@@ -193,4 +193,17 @@ class LivroRepositoryTest {
         var resultado = livroRepository.listarGenerosAutoresBrasileiros();
         resultado.forEach(System.out::println);
     }
+
+    @Test
+    void buscarPorGeneroQueryParam() {
+        var busca = livroRepository.findByGenero(GeneroLivro.FANTASIA, "preco");
+        busca.forEach(System.out::println);
+    }
+
+
+    @Test
+    void buscarByGeneroPositionalParameters() {
+        var busca = livroRepository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA, "preco");
+        busca.forEach(System.out::println);
+    }
 }
