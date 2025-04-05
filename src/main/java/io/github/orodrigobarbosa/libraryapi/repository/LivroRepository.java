@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @Repository
 public interface LivroRepository extends JpaRepository<Livro, UUID> {
-
+//https://docs.spring.io/spring-data/jpa/reference/jpa/query-methods.html
     List<Livro> findByAutor(Autor autor);
 
     //select * from livro where titulo = titulo
@@ -22,7 +22,13 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
     //select * from livro where titulo = ?  and preco = ?
     List<Livro> findByTituloAndPreco(String titulo, BigDecimal preco);
 
+
+
+    List<Livro> findByTituloAndPrecoOrderByTitulo(String titulo, BigDecimal preco);
+
     //select * from livro where titulo = ?  or isbn = ?
     List<Livro> findByTituloOrIsbn(String titulo, String isbn);
+
+
 
 }
