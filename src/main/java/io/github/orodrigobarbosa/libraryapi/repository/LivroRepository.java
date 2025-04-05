@@ -1,9 +1,11 @@
 package io.github.orodrigobarbosa.libraryapi.repository;
 
 import io.github.orodrigobarbosa.libraryapi.model.Autor;
+import io.github.orodrigobarbosa.libraryapi.model.GeneroLivro;
 import io.github.orodrigobarbosa.libraryapi.model.Livro;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.math.BigDecimal;
@@ -12,7 +14,7 @@ import java.util.UUID;
 
 
 /**
- * @see  LivroRepositoryTest
+ * @see LivroRepositoryTest
  */
 
 @Repository
@@ -46,13 +48,12 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
      * select a.*
      * from livro l
      * join autor a on a.id = l.id_autor
-     *
      */
     @Query(" select a from Livro l join l.autor a ")
     List<Autor> listarAutoresDosLivros();
 
-//delect distinct l.* from livro l
-    @Query ("select distinct l.titulo from Livro l")
+    //delect distinct l.* from livro l
+    @Query("select distinct l.titulo from Livro l")
     List<String> listarLivrosNomesDiferentes();
 
     @Query("""
@@ -63,5 +64,11 @@ public interface LivroRepository extends JpaRepository<Livro, UUID> {
             """)
     List<String> listarGenerosAutoresBrasileiros();
 
+    //NAMED PARAMETERS
+    @Query("select l from Livro l where l.genero= :genero order by :parametro")
+    List<Livro> findByGenero(@Param("genero") GeneroLivro generoLivro, String parametro);
 
+    //POSITIONAL PARAMETERS
+    @Query("select l from Livro l where l.genero= ?1 order by ?2 ")
+    List<Livro> findByGeneroPositionalParameters(GeneroLivro generoLivro, String parametro);
 }
