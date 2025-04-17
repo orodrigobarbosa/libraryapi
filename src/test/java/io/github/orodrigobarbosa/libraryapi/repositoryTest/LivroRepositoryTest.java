@@ -20,6 +20,7 @@ class LivroRepositoryTest {
 
     @Autowired
     LivroRepository livroRepository;
+
     @Autowired
     AutorRepository autorRepository;
 
