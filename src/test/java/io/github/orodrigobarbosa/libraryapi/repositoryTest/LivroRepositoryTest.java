@@ -20,6 +20,7 @@ class LivroRepositoryTest {
 
     @Autowired
     LivroRepository livroRepository;
+
     @Autowired
     AutorRepository autorRepository;
 
@@ -205,5 +206,16 @@ class LivroRepositoryTest {
     void buscarByGeneroPositionalParameters() {
         var busca = livroRepository.findByGeneroPositionalParameters(GeneroLivro.FANTASIA, "preco");
         busca.forEach(System.out::println);
+    }
+
+
+    @Test
+    void deletarPorGenero(){
+        livroRepository.deleteByGenero(GeneroLivro.FICCAO);
+    }
+
+    @Test
+    void atualizarLivroPorData(){
+        livroRepository.updateLivroDataPublicacao(LocalDate.of(1990,2,26));
     }
 }
