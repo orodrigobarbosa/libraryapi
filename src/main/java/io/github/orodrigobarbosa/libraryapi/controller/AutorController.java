@@ -1,12 +1,8 @@
 package io.github.orodrigobarbosa.libraryapi.controller;
 
 import io.github.orodrigobarbosa.libraryapi.controller.dto.AutorDTO;
-import io.github.orodrigobarbosa.libraryapi.model.Autor;
 import io.github.orodrigobarbosa.libraryapi.service.AutorService;
 import lombok.AllArgsConstructor;
-import org.springframework.boot.autoconfigure.web.ServerProperties;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
