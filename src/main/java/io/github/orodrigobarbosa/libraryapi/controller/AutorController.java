@@ -30,7 +30,12 @@ public class AutorController {
         //hhttp://localhost:8080/autores/id
         URI location = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}").buildAndExpand(autorEntidade.getId()).toUri();
         return ResponseEntity.created(location).build();
+
+        
     }
+
+
+
 
     @GetMapping("/{id}")
     public ResponseEntity<AutorDTO> buscarAutorPorId(@PathVariable("id") String id) {
@@ -58,7 +63,7 @@ public class AutorController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping //AutorDTO porque sempre na entrada e saida estamos usando dto porque faz parte da camada representativa
+    @GetMapping //AutorDTO porque sempre na entrada e saida estamos usando dto, porque faz parte da camada representativa
     //pesquisar por nome ou nacionaldide
     public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam(value = "nome", required = false) String nome, //value + required false elimina a obrigatoriedade do parametro
                                                         @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {

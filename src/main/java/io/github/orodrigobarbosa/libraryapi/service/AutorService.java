@@ -21,11 +21,11 @@ public class AutorService {
     }
 
     public Autor atualizarAutor(Autor autor) {
-       if (autor.getId() ==null){
-           throw new IllegalArgumentException("Para atualizar, se faz necessário que o autor já esteja salvo na base de dados e tenha um id");
-       }
+        if (autor.getId() == null) {
+            throw new IllegalArgumentException("Para atualizar, se faz necessário que o autor já esteja salvo na base de dados e tenha um id");
+        }
 
-       return autorRepository.save(autor);
+        return autorRepository.save(autor);
     }
 
 
@@ -38,11 +38,11 @@ public class AutorService {
     }
 
 
-    //este metodo fazer 3 coisas.. o ideal é cada método fazer uma unica coisa. Será melhorado
+    //este metodo faz 3 coisas.. o ideal é cada metodo fazer uma unica coisa. Será melhorado
     public List<Autor> listarAutoresPorNomeENacionalidade(String nome, String nacionalidade) {
 
 
-        if(nome != null && nacionalidade != null){
+        if (nome != null && nacionalidade != null) {
             return autorRepository.findByNomeAndNacionalidade(nome, nacionalidade);
         }
 
@@ -55,4 +55,14 @@ public class AutorService {
         }
         return autorRepository.findAll();
     }
+
+
+
+
+
+
+
+
+
+
 }
