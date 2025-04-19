@@ -20,6 +20,14 @@ public class AutorService {
 
     }
 
+    public Autor atualizarAutor(Autor autor) {
+       if (autor.getId() ==null){
+           throw new IllegalArgumentException("Para atualizar, se faz necessário que o autor já esteja salvo na base de dados e tenha um id");
+       }
+
+       return autorRepository.save(autor);
+    }
+
 
     public Optional<Autor> buscarPorId(UUID id) {
         return autorRepository.findById(id);

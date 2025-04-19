@@ -36,7 +36,7 @@ public class AutorController {
     public ResponseEntity<AutorDTO> buscarAutorPorId(@PathVariable("id") String id) {
         var idAutor = UUID.fromString(id);
         Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
-        if(autorOptional.isPresent()) {
+        if (autorOptional.isPresent()) {
             Autor autor = autorOptional.get();
             AutorDTO dto = new AutorDTO(autor.getId(), autor.getNome(), autor.getDataNascimento(), autor.getNacionalidade());
             return ResponseEntity.ok(dto);
@@ -51,7 +51,7 @@ public class AutorController {
         Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
 
 
-        if(autorOptional.isEmpty()){
+        if (autorOptional.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
         autorService.deletar(autorOptional.get());
@@ -60,9 +60,9 @@ public class AutorController {
 
     @GetMapping //AutorDTO porque sempre na entrada e saida estamos usando dto porque faz parte da camada representativa
     //pesquisar por nome ou nacionaldide
-    public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam (value = "nome", required = false)String nome, //value + required false elimina a obrigatoriedade do parametro
-                                                        @RequestParam (value = "nacionalidade",required = false) String nacionalidade) {
-        List<Autor> resultado = autorService.listarAutoresPorNomeENacionalidade( nome, nacionalidade);
+    public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam(value = "nome", required = false) String nome, //value + required false elimina a obrigatoriedade do parametro
+                                                        @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {
+        List<Autor> resultado = autorService.listarAutoresPorNomeENacionalidade(nome, nacionalidade);
         List<AutorDTO> lista = resultado
                 .stream()
                 .map(autor -> new AutorDTO(
@@ -72,8 +72,25 @@ public class AutorController {
                         autor.getNacionalidade()))
                 .collect(Collectors.toList());
         return ResponseEntity.ok(lista);
-
-
-
     }
+
+    @PutMapping("/{id}")
+    public ResponseEntity<AutorDTO> atualizarAutor(@PathVariable("id") String id, @RequestBody AutorDTO dtoAutor) {
+        var idAutor = UUID.fromString(id);
+        Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
+
+        if (autorOptional.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        var autor = autorOptional.get();
+        autor.setNome(dtoAutor.nome());
+        autor.setNacionalidade(dtoAutor.nacionalidade());
+        autor.setDataNascimento(dtoAutor.dataNascimento());
+        autorService.atualizarAutor(autor);
+
+        return ResponseEntity.noContent().build();
+    }
+
+
 }
