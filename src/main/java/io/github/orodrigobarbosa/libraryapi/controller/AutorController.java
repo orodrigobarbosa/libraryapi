@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.stream.Collectors;
 
 @AllArgsConstructor
 @RestController
@@ -54,5 +56,24 @@ public class AutorController {
         }
         autorService.deletar(autorOptional.get());
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping //AutorDTO porque sempre na entrada e saida estamos usando dto porque faz parte da camada representativa
+    //pesquisar por nome ou nacionaldide
+    public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam (value = "nome", required = false)String nome, //value + required false elimina a obrigatoriedade do parametro
+                                                        @RequestParam (value = "nacionalidade",required = false) String nacionalidade) {
+        List<Autor> resultado = autorService.listarAutoresPorNomeENacionalidade( nome, nacionalidade);
+        List<AutorDTO> lista = resultado
+                .stream()
+                .map(autor -> new AutorDTO(
+                        autor.getId(),
+                        autor.getNome(),
+                        autor.getDataNascimento(),
+                        autor.getNacionalidade()))
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(lista);
+
+
+
     }
 }
