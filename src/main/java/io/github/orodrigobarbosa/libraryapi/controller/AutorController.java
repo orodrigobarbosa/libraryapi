@@ -2,6 +2,7 @@ package io.github.orodrigobarbosa.libraryapi.controller;
 
 import io.github.orodrigobarbosa.libraryapi.controller.dto.AutorDTO;
 import io.github.orodrigobarbosa.libraryapi.controller.dto.ErroResposta;
+import io.github.orodrigobarbosa.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.orodrigobarbosa.libraryapi.exceptions.RegistroDuplicadoException;
 import io.github.orodrigobarbosa.libraryapi.model.Autor;
 import io.github.orodrigobarbosa.libraryapi.service.AutorService;
@@ -62,22 +63,29 @@ public class AutorController {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deletarAutorPorId(@PathVariable("id") String id) {
-        var idAutor = UUID.fromString(id);
-        Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
+    public ResponseEntity<Object> deletarAutorPorId(@PathVariable("id") String id) {
+
+        try {
+            var idAutor = UUID.fromString(id);
+            Optional<Autor> autorOptional = autorService.buscarPorId(idAutor);
 
 
-        if (autorOptional.isEmpty()) {
-            return ResponseEntity.notFound().build();
+            if (autorOptional.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+            autorService.deletar(autorOptional.get());
+            return ResponseEntity.noContent().build();
+        } catch (OperacaoNaoPermitidaException e) {
+            var erroResporta = ErroResposta.erroResposta(e.getMessage());
+            return ResponseEntity.status(erroResporta.status()).body(erroResporta);
         }
-        autorService.deletar(autorOptional.get());
-        return ResponseEntity.noContent().build();
     }
 
     @GetMapping
     //AutorDTO porque sempre na entrada e saida estamos usando dto, porque faz parte da camada representativa
     //pesquisar por nome ou nacionaldide
-    public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam(value = "nome", required = false) String nome, //value + required false elimina a obrigatoriedade do parametro
+    public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam(value = "nome", required = false) String
+                                                                nome, //value + required false elimina a obrigatoriedade do parametro
                                                         @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {
         List<Autor> resultado = autorService.listarAutoresPorNomeENacionalidade(nome, nacionalidade);
         List<AutorDTO> lista = resultado

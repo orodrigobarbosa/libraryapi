@@ -1,7 +1,9 @@
 package io.github.orodrigobarbosa.libraryapi.service;
 
+import io.github.orodrigobarbosa.libraryapi.exceptions.OperacaoNaoPermitidaException;
 import io.github.orodrigobarbosa.libraryapi.model.Autor;
 import io.github.orodrigobarbosa.libraryapi.repository.AutorRepository;
+import io.github.orodrigobarbosa.libraryapi.repository.LivroRepository;
 import io.github.orodrigobarbosa.libraryapi.validator.AutorValidator;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -18,9 +20,12 @@ public class AutorService {
 
     private AutorValidator autorValidator;
 
-    public AutorService(AutorRepository autorRepository, AutorValidator autorValidator) {
+    private LivroRepository livroRepository;
+
+    public AutorService(AutorRepository autorRepository, AutorValidator autorValidator, LivroRepository livroRepository) {
         this.autorRepository = autorRepository;
         this.autorValidator = autorValidator;
+        this.livroRepository = livroRepository;
     }
 
     public Autor salvarAutor(Autor autor) {
@@ -43,6 +48,10 @@ public class AutorService {
     }
 
     public void deletar(Autor autor) {
+        if (autorPossuiLivro(autor)) {
+            throw new OperacaoNaoPermitidaException("Não é permitido deletar. Autor(a) possui livros cadastrados!");
+        }
+
         autorRepository.delete(autor);
     }
 
@@ -66,12 +75,10 @@ public class AutorService {
     }
 
 
+    public boolean autorPossuiLivro(Autor autor) {
+        return livroRepository.existsByAutor(autor);
 
-
-
-
-
-
+    }
 
 
 }
