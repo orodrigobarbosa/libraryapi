@@ -5,28 +5,24 @@ import io.github.orodrigobarbosa.libraryapi.model.Autor;
 import io.github.orodrigobarbosa.libraryapi.repository.AutorRepository;
 import io.github.orodrigobarbosa.libraryapi.repository.LivroRepository;
 import io.github.orodrigobarbosa.libraryapi.validator.AutorValidator;
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
-
+@RequiredArgsConstructor
 @Service
 public class AutorService {
 
-    private AutorRepository autorRepository;
+    private final AutorRepository autorRepository;
 
-    private AutorValidator autorValidator;
+    private final AutorValidator autorValidator;
 
-    private LivroRepository livroRepository;
+    private final LivroRepository livroRepository;
 
-    public AutorService(AutorRepository autorRepository, AutorValidator autorValidator, LivroRepository livroRepository) {
-        this.autorRepository = autorRepository;
-        this.autorValidator = autorValidator;
-        this.livroRepository = livroRepository;
-    }
+
 
     public Autor salvarAutor(Autor autor) {
         autorValidator.validar(autor);
