@@ -2,6 +2,7 @@ package io.github.orodrigobarbosa.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import org.hibernate.validator.constraints.ISBN;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -18,6 +19,7 @@ public class Livro {
     private UUID id;
 
     @Column(name = "isbn", length = 20, nullable = false)
+    @ISBN(type = ISBN.Type.ANY)
     private String isbn;
 
     @Column(name = "titulo", length = 150, nullable = false)
