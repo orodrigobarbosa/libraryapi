@@ -6,6 +6,8 @@ import io.github.orodrigobarbosa.libraryapi.repository.AutorRepository;
 import io.github.orodrigobarbosa.libraryapi.repository.LivroRepository;
 import io.github.orodrigobarbosa.libraryapi.validator.AutorValidator;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
+import org.springframework.data.domain.ExampleMatcher;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -21,7 +23,6 @@ public class AutorService {
     private final AutorValidator autorValidator;
 
     private final LivroRepository livroRepository;
-
 
 
     public Autor salvarAutor(Autor autor) {
@@ -70,6 +71,21 @@ public class AutorService {
         return autorRepository.findAll();
     }
 
+    public List<Autor> pesquisaByExample
+            (String nome, String nacionalidade) {
+        var autor = new Autor();
+        autor.setNome(nome);
+        autor.setNacionalidade(nacionalidade);
+
+        ExampleMatcher matcher = ExampleMatcher
+                .matching()
+                .withIgnoreNullValues()
+                .withIgnoreCase()
+                .withStringMatcher(ExampleMatcher.StringMatcher.CONTAINING);
+
+        Example<Autor> autorExample = Example.of(autor, matcher);
+        return autorRepository.findAll(autorExample);
+    }
 
     public boolean autorPossuiLivro(Autor autor) {
         return livroRepository.existsByAutor(autor);

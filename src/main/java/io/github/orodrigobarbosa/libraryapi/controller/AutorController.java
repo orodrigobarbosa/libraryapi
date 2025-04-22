@@ -88,7 +88,7 @@ public class AutorController {
     public ResponseEntity<List<AutorDTO>> listarAutores(@RequestParam(value = "nome", required = false) String
                                                                 nome, //value + required false elimina a obrigatoriedade do parametro
                                                         @RequestParam(value = "nacionalidade", required = false) String nacionalidade) {
-        List<Autor> resultado = autorService.listarAutoresPorNomeENacionalidade(nome, nacionalidade);
+        List<Autor> resultado = autorService.pesquisaByExample(nome, nacionalidade);
         List<AutorDTO> lista = resultado
                 .stream()
                 .map(autor -> new AutorDTO(
