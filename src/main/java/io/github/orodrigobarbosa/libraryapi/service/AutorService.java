@@ -71,8 +71,9 @@ public class AutorService {
         return autorRepository.findAll();
     }
 
+    //substitui o método acima utilizando examples
     public List<Autor> pesquisaByExample
-            (String nome, String nacionalidade) {
+    (String nome, String nacionalidade) {
         var autor = new Autor();
         autor.setNome(nome);
         autor.setNacionalidade(nacionalidade);
