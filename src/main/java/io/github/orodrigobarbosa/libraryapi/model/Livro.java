@@ -2,15 +2,22 @@ package io.github.orodrigobarbosa.libraryapi.model;
 
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.ToString;
 import org.hibernate.validator.constraints.ISBN;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.UUID;
 
 @Data
 @Table(name = "livro")
 @Entity
+@ToString(exclude = "autor")
+@EntityListeners(AuditingEntityListener.class)
 public class Livro {
 
     @Id
@@ -39,6 +46,16 @@ public class Livro {
     @JoinColumn(name = "id_autor")
     private Autor autor;
 
+    @CreatedDate //Anotattion preenche a data automaticamente
+    @Column(name = "data_cadastro", nullable = false)
+    private LocalDateTime dataCadastro;
+
+    @LastModifiedDate //Anotattion preenche a data da atualização att
+    @Column(name = "data_atualizacao")
+    private LocalDateTime dataAtualizacao;
+
+    @Column(name = "id_usuario")
+    private UUID idUsuario;
 
 
 
